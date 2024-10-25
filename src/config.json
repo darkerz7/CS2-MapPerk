@@ -1,8 +1,12 @@
 {
-	"_comment" : "If you want to use it on all maps, disable whitelist",
+	"_comment" : "If you want to use it on all maps without blacklist, disable whitelist",
 	"whitelist" : true,
-	"maps" : [
+	"maps_whitelist" : [
 		"ze_dark_fantasy",
+		"test_view"
+	],
+	"maps_blacklist" : [
+		"ze_misaka",
 		"test_view"
 	]
 }

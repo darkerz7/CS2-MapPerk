@@ -15,7 +15,7 @@ namespace CS2_MapPerk
 		public override string ModuleName => "Map Perk";
 		public override string ModuleDescription => "Adds his steamid to the player attribute";
 		public override string ModuleAuthor => "DarkerZ [RUS]";
-		public override string ModuleVersion => "1.DZ.0";
+		public override string ModuleVersion => "1.DZ.1";
 		public override void Load(bool hotReload)
 		{
 			RegisterListener<OnMapStart>(OnMapStart_Listener);
@@ -72,19 +72,31 @@ namespace CS2_MapPerk
 					sData = File.ReadAllText(sConfig);
 					cfg = JsonSerializer.Deserialize<ConfigJSON>(sData);
 				} catch { PrintToConsole($"Bad Config file ({sConfig})"); return false; }
-				
+
+				if (cfg == null)
+				{
+					PrintToConsole($"Bad Config file ({sConfig})");
+					return false;
+				}
 				if (cfg.whitelist)
 				{
-					foreach (string sMap in cfg.maps.ToList())
+					foreach (string sMap in cfg.maps_whitelist.ToList())
 					{
-						if (sMap.ToLower() == sMapName)
+						if (sMapName.CompareTo(sMap.ToLower()) == 0)
 						{
 							g_bEnable = true;
 							return true;
 						}
 					}
 				}
-				else g_bEnable = true;
+				else
+				{
+					foreach (string sMap in cfg.maps_blacklist.ToList())
+					{
+						if (sMapName.CompareTo(sMap.ToLower()) == 0) return true;
+					}
+					g_bEnable = true;
+				}
 					
 				return true;
 			} else PrintToConsole($"Config file ({sConfig}) not found");
@@ -105,11 +117,13 @@ namespace CS2_MapPerk
 		class ConfigJSON
 		{
 			public bool whitelist { get; set; }
-			public List<string> maps { get; set; }
+			public List<string> maps_whitelist { get; set; }
+			public List<string> maps_blacklist { get; set; }
 			public ConfigJSON()
 			{
 				whitelist = true;
-				maps = new List<string>();
+				maps_whitelist = new List<string>();
+				maps_blacklist = new List<string>();
 			}
 		}
 	}
