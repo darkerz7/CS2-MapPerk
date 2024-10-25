@@ -1,0 +1,8 @@
+{
+	"_comment" : "If you want to use it on all maps, disable whitelist",
+	"whitelist" : true,
+	"maps" : [
+		"ze_dark_fantasy",
+		"test_view"
+	]
+}
