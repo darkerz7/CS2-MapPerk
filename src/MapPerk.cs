@@ -15,7 +15,7 @@ namespace CS2_MapPerk
 		public override string ModuleName => "Map Perk";
 		public override string ModuleDescription => "Adds his steamid to the player attribute";
 		public override string ModuleAuthor => "DarkerZ [RUS]";
-		public override string ModuleVersion => "1.DZ.1";
+		public override string ModuleVersion => "1.DZ.1.1";
 		public override void Load(bool hotReload)
 		{
 			RegisterListener<OnMapStart>(OnMapStart_Listener);
@@ -82,7 +82,7 @@ namespace CS2_MapPerk
 				{
 					foreach (string sMap in cfg.maps_whitelist.ToList())
 					{
-						if (sMapName.CompareTo(sMap.ToLower()) == 0)
+						if (string.Equals(sMapName, sMap.ToLower()))
 						{
 							g_bEnable = true;
 							return true;
@@ -93,7 +93,7 @@ namespace CS2_MapPerk
 				{
 					foreach (string sMap in cfg.maps_blacklist.ToList())
 					{
-						if (sMapName.CompareTo(sMap.ToLower()) == 0) return true;
+						if (string.Equals(sMapName, sMap.ToLower())) return true;
 					}
 					g_bEnable = true;
 				}
