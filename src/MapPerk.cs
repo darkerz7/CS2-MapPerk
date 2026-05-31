@@ -1,5 +1,6 @@
 ﻿using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Core.Attributes;
 using CounterStrikeSharp.API.Core.Attributes.Registration;
 using CounterStrikeSharp.API.Modules.Admin;
 using CounterStrikeSharp.API.Modules.Commands;
@@ -8,14 +9,15 @@ using static CounterStrikeSharp.API.Core.Listeners;
 
 namespace CS2_MapPerk
 {
-	public class MapPerk : BasePlugin
+    [MinimumApiVersion(369)]
+    public class MapPerk : BasePlugin
 	{
 		bool g_bEnable = false;
 		ConfigJSON? cfg = new ConfigJSON();
 		public override string ModuleName => "Map Perk";
 		public override string ModuleDescription => "Adds his steamid to the player attribute";
 		public override string ModuleAuthor => "DarkerZ [RUS]";
-		public override string ModuleVersion => "1.DZ.1.1";
+		public override string ModuleVersion => "1.DZ.2";
 		public override void Load(bool hotReload)
 		{
 			RegisterListener<OnMapStart>(OnMapStart_Listener);
